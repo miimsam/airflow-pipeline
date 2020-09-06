@@ -4,10 +4,10 @@ services:
     image: postgres:9.6
     restart: always
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - postgres:/srv/airflow-docker/postgresql/data
     environment:
-      POSTGRES_USER: fixme
-      POSTGRES_PASSWORD: fixme
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airfl0w
       POSTGRES_DB: airflow
 
   scheduler:
@@ -20,7 +20,7 @@ services:
       - postgres
     environment:
       AIRFLOW__CORE__FERNET_KEY: 8NE6O6RcTJpxcCkuKxOHOExzIJkXkeJKbRie03a69dI=
-      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql://fixme:fixme@postgres:5432/airflow
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql://airflow:airfl0w@postgres:5432/airflow
       PYSPARK_SUBMIT_ARGS: --driver-memory 16g --packages com.databricks:spark-csv_2.10:1.5.0,com.databricks:spark-avro_2.10:2.0.1,graphframes:graphframes:0.1.0-spark1.6 pyspark-shell
 #      PYSPARK_SUBMIT_ARGS: --driver-memory 16g --packages com.databricks:spark-csv_2.11:1.5.0,com.databricks:spark-avro_2.11:3.1.0,graphframes:graphframes:0.3.0-spark2.0-s_2.11 pyspark-shell
       PYSPARK_PYTHON: /usr/local/bin/python2.7
@@ -28,7 +28,10 @@ services:
       PIPELINE_DATA_FORMAT: com.databricks.spark.avro
     command: afp-scheduler
     volumes:
-      - airflow_logs:/airflow/logs
+      - airflow_logs:/airflow/logs:rw
+      - /opt/cloudera/parcels/Anaconda-2019.10/bin/:${SPARK_HOME}/bin/:ro
+      - /usr/bin/sqoop:/usr/bin/sqoop:ro
+
   webserver:
     build:
       context: .
@@ -39,10 +42,10 @@ services:
       - scheduler
     environment:
       AIRFLOW__CORE__FERNET_KEY: 8NE6O6RcTJpxcCkuKxOHOExzIJkXkeJKbRie03a69dI=
-      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql://fixme:fixme@postgres:5432/airflow
-      AIRFLOW_USER: fixme
-      AIRFLOW_EMAIL: fixme@fix.me
-      AIRFLOW_PASSWORD: fixme
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql://airflow:airfl0w@postgres:5432/airflow
+      AIRFLOW_USER: zerone
+      AIRFLOW_EMAIL: info@uzer.one
+      AIRFLOW_PASSWORD: _zerone@
     ports:
       - 127.0.0.1:8080:8080
     command: afp-webserver

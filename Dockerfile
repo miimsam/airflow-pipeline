@@ -31,9 +31,9 @@ COPY unittests.cfg ${AIRFLOW_HOME}/unittests.cfg
 COPY webserver_config.py ${AIRFLOW_HOME}/webserver_config.py
 
 # Create default user and group
-ARG user=afpuser
+ARG user=airflow
 ENV USER=${user}
-ARG group=hadoop
+ARG group=airflow
 ENV GROUP=${group}
 RUN groupadd -r "${GROUP}" && useradd -rmg "${GROUP}" "${USER}"
 
