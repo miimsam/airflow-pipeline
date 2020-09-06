@@ -19,6 +19,8 @@ services:
     depends_on:
       - postgres
     environment:
+      USER: airflow
+      GROUP: airflow
       AIRFLOW__CORE__FERNET_KEY: 8NE6O6RcTJpxcCkuKxOHOExzIJkXkeJKbRie03a69dI=
       AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql://airflow:airfl0w@postgres:5432/airflow
       PYSPARK_SUBMIT_ARGS: --driver-memory 16g --packages com.databricks:spark-csv_2.10:1.5.0,com.databricks:spark-avro_2.10:2.0.1,graphframes:graphframes:0.1.0-spark1.6 pyspark-shell
@@ -41,6 +43,8 @@ services:
     depends_on:
       - scheduler
     environment:
+      USER: airflow
+      GROUP: airflow
       AIRFLOW__CORE__FERNET_KEY: 8NE6O6RcTJpxcCkuKxOHOExzIJkXkeJKbRie03a69dI=
       AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql://airflow:airfl0w@postgres:5432/airflow
       AIRFLOW_USER: zerone
