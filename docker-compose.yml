@@ -47,7 +47,7 @@ services:
       AIRFLOW_EMAIL: info@uzer.one
       AIRFLOW_PASSWORD: _zerone@
     ports:
-      - 127.0.0.1:8080:8080
+      - 127.0.0.1:8083:8083
     command: afp-webserver
     volumes_from:
       - scheduler
